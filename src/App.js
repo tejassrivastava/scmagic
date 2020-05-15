@@ -12,6 +12,8 @@ import { PrivateRoute } from './components/Private/PrivateRoute';
 import { HomePage } from './components/Private/HomePage/HomePage';
 import { LoginPage } from './components/Public/LoginPage';
 import { RegisterPage } from './components/Public/RegisterPage/RegisterPage';
+import { JobPage } from './components/Private/job/job';
+import { SuccessPage } from './components/Private/Success/Success';
 
 class App extends Component{
   constructor(props) {
@@ -26,15 +28,17 @@ class App extends Component{
 render() {
   const { alert } = this.props;
   return (
-      <div className="jumbotron">
+      
           <div className="container">
-              <div className="col-sm-8 col-sm-offset-2">
+              <div className="">
                   {alert.message &&
                       <div className={`alert ${alert.type}`}>{alert.message}</div>
                   }
                   <Router history={history}>
                       <Switch>
                           <PrivateRoute exact path="/" component={HomePage} />
+                          <PrivateRoute exact path="/job" component={JobPage} />
+                          <PrivateRoute exact path="/success" component={SuccessPage} />
                           <Route path="/login" component={LoginPage} />
                           <Route path="/register" component={RegisterPage} />
                           <Redirect from="*" to="/" />
@@ -42,7 +46,7 @@ render() {
                   </Router>
               </div>
           </div>
-      </div>
+      
   );
 }
 }

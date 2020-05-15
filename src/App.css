@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+.jobContainer {
+  padding-top: 5%;
+}
+
+.succcon {
+  padding-top: 5%;
+  
+}
+
+.jumb {
+  border: 2px solid green;
+  padding: 10px;
+}
+
+.loginContainer {
+
+  position: absolute;
+  top: 30%;
+  left:30%;
+}
+
+.registerContainer {
+  position: absolute;
+  top: 20%;
+  left:25%;
+}
+
+.loginform {
+  border: 2px solid black;
+}
+
+.registerform {
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.homecon {
+  padding-top: 5%;
+}

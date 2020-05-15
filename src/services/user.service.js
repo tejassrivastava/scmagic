@@ -37,17 +37,25 @@ const register = async (user) => {
 }
 
 
-const getAllJob  = async (data) => {
+const getAllJob  = async (req) => {
     
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(user)
-    // };
+    
     
 
-    const response = await axios.get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?search=node");
-    return handleResponse(response);
+    const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=${req.index}&search=${req.search}`);
+    if(response && response.data){console.log(response); return response.data}
+    else{ return []}
+}
+
+
+const getSingleJob  = async (url) => {
+    
+    
+    
+
+    const response = await axios.get(`${url}.json`);
+    if(response && response.data){console.log(response); return response.data}
+    else{ return []}
 }
 
 
@@ -73,5 +81,6 @@ export const userService = {
     login,
     logout,
     register,
-    getAllJob
+    getAllJob,
+    getSingleJob
 };

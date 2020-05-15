@@ -1,50 +1,74 @@
-import { userConstants } from '../constants/user.constants';
+import { userConstants } from "../constants/user.constants";
 
-export function users(state = {}, action) {
+export function users(
+  state = {
+    tableVisible: false,
+    tableSpinner: false,
+    tabindexval: 0,
+
+    jobSpinner: false,
+    jobVisible: false,
+    job: []
+  },
+  action
+) {
   switch (action.type) {
-    case userConstants.GETALL_REQUEST:
-      return {
-        loading: true
-      };
-    case userConstants.GETALL_SUCCESS:
-      return {
-        items: action.users
-      };
-    case userConstants.GETALL_FAILURE:
-      return { 
-        error: action.error
-      };
-    case userConstants.DELETE_REQUEST:
-      // add 'deleting:true' property to user being deleted
-      return {
-        ...state,
-        items: state.items.map(user =>
-          user.id === action.id
-            ? { ...user, deleting: true }
-            : user
-        )
-      };
-    case userConstants.DELETE_SUCCESS:
-      // remove deleted user from state
-      return {
-        items: state.items.filter(user => user.id !== action.id)
-      };
-    case userConstants.DELETE_FAILURE:
-      // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
-      return {
-        ...state,
-        items: state.items.map(user => {
-          if (user.id === action.id) {
-            // make copy of user without 'deleting:true' property
-            const { deleting, ...userCopy } = user;
-            // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
-          }
+    case userConstants.GET_ALL_JOB:
+      console.log("in getall dispatch");
 
-          return user;
-        })
+      return {
+        ...state,
+        tableSpinner: true
       };
+
+    case userConstants.GET_ALL_JOB_SUCCESS:
+      let tbIndex;
+      if(state.tabindexval===1){tbIndex=1}
+      else{tbIndex=state.tabindexval+1}
+      return {
+        ...state,
+        jobs: [...action.data],
+        tableSpinner: false,
+        tableVisible: true,
+        tabindexval: state.tabindexval+1
+      };
+
+    case userConstants.GET_ALL_JOB_FAILURE:
+      return{
+        ...state,
+        tableSpinner:false
+      }
+
+
+      case userConstants.GET_PREV_ALL_JOB_SUCCESS:
+      return {
+        ...state,
+        jobs: [...action.data],
+        tableSpinner: false,
+        tableVisible: true,
+        tabindexval: state.tabindexval-1
+      };
+
+      case userConstants.GET_SINGLE_JOB:
+        return{
+          ...state,
+          jobSpinner: true
+        };
+
+      case userConstants.GET_SINGLE_JOB_SUCCESS:
+          return{
+            ...state,
+            jobSpinner: false,
+            jobVisible: true,
+            job: [...action.data]
+          };
+      case userConstants.GET_SINGLE_JOB_FAILURE:
+            return{
+              ...state,
+              jobSpinner: false
+            };
+
     default:
-      return state
+      return state;
   }
 }
