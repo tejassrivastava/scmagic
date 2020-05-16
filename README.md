@@ -1,3 +1,28 @@
+# Welcome to ScMagic !!!
+
+# About
+This web application lets user fetch relevant jobs from github jobs public API.
+User can then view the detailed job description and also apply to it.
+
+# Installation
+
+Run `npm install`to install respective dependencies.
+
+# Usage
+
+Frontend: Visit `localhost:3000` for the sms UI
+
+
+# Architecture/Environment
+Frontend : React v16.13.1
+
+
+# Author
+**Tejas Srivastava**
+
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

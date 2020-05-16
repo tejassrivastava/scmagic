@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { userActions } from "../../../actions/user.actions";
 import { history } from "../../../helpers/history";
+
+import { persistor } from "../../../helpers/store";
 
 class HomePage extends React.Component {
   constructor() {
@@ -23,9 +24,10 @@ class HomePage extends React.Component {
   prevDisable = true;
 
   jobClickHandler = (d) => {
+    this.props.singleJobClick(d);
+
     history.push({
       pathname: "/job",
-      data: d,
     });
   };
 
@@ -46,6 +48,17 @@ class HomePage extends React.Component {
     }
   };
 
+  logoutClick = () => {
+    persistor
+      .purge()
+      .then(() => {
+        return persistor.flush();
+      })
+      .then(() => {
+        persistor.pause();
+        history.push("/login");
+      });
+  };
   render() {
     const { user, users } = this.props;
     return (
@@ -54,7 +67,14 @@ class HomePage extends React.Component {
           <h1>Hi {user.firstName}!</h1>
           <p>You're logged in !!!</p>
           <p className="">
-            <Link to="/login">Logout</Link>
+            <a
+              href=""
+              onClick={() => {
+                this.logoutClick();
+              }}
+            >
+              Logout
+            </a>
           </p>
         </div>
         <div className="col-md-12">
@@ -70,7 +90,7 @@ class HomePage extends React.Component {
             />
             <div className="input-group-append">
               <button
-                className="btn btn-outline-primary"
+                className="btn btn-primary"
                 type="button"
                 id="button-addon2"
                 onClick={() => {
@@ -98,7 +118,6 @@ class HomePage extends React.Component {
                   <a
                     className="page-link"
                     style={{ cursor: "pointer" }}
-                    
                     tabIndex="-1"
                     aria-disabled="true"
                     onClick={() => {
@@ -113,8 +132,7 @@ class HomePage extends React.Component {
                 </li>
                 <li className="page-item">
                   <a
-                          style={{ cursor: "pointer" }}
-
+                    style={{ cursor: "pointer" }}
                     className="page-link"
                     onClick={() => {
                       this.nextClickHandler();
@@ -218,6 +236,7 @@ const mapStateToProps = (state) => {
 const actionCreators = {
   submitUserReq: userActions.getAllJob,
   submitPrevUserReq: userActions.getPrevAllJob,
+  singleJobClick: userActions.singleJobClick,
 };
 
 const connectedHomePage = connect(mapState, actionCreators)(HomePage);

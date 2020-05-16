@@ -187,6 +187,16 @@ const getSingleJob = (url) => {
   }
 };
 
+const singleJobClick = (job) => {
+  return (dispatch) => {
+    dispatch(submit(job));
+  };
+
+  function submit(job) {
+    return { type: userConstants.GET_SINGLE_JOB, job };
+  }
+};
+
 export const userActions = {
   login,
   logout,
@@ -194,4 +204,5 @@ export const userActions = {
   getAllJob,
   getPrevAllJob,
   getSingleJob,
+  singleJobClick,
 };

@@ -53,7 +53,8 @@ class JobPage extends React.Component {
   };
 
   render() {
-    const { data } = this.props.location;
+    const data = this.props.job;
+
     window.scrollTo(0, 0);
     return (
       <div className="container jobContainer">
@@ -178,6 +179,7 @@ class JobPage extends React.Component {
 }
 
 const mapState = (state) => {
+  console.log("JOB::STATE", state.users.job);
   const { users, authentication } = state;
   const { user } = authentication;
 
@@ -185,8 +187,6 @@ const mapState = (state) => {
     user,
     users,
     job: state.users.job,
-    jobVisible: state.users.jobVisible,
-    jobSpinner: state.users.jobSpinner,
   };
 };
 
